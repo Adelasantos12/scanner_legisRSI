@@ -1,0 +1,16 @@
+texto,sector,funcion,actor,instrumento,has_authority
+"La Secretaría de Salud establecerá un sistema nacional de vigilancia epidemiológica.",Salud_humana,vigilancia,Secretaría de Salud,Ley General de Salud,TRUE
+"El Punto Focal Nacional notificará a la OMS cualquier evento de interés en salud pública.",Relaciones_exteriores,notificacion,Punto Focal RSI,Decreto de Implementación RSI,TRUE
+"Los puertos marítimos deberán contar con servicios de sanidad internacional.",Transporte,poe,Autoridad Sanitaria Portuaria,Ley de Puertos,TRUE
+"El Servicio Nacional de Sanidad Animal vigilará las enfermedades zoonóticas.",Salud_animal,vigilancia,SENASA,Ley de Sanidad Animal,TRUE
+"El Ministerio de Hacienda creará un fondo permanente para emergencias sanitarias.",Finanzas_publicas,legislacion_financiamiento,Ministerio de Hacienda,Ley de Presupuesto,TRUE
+"Los gobiernos locales participarán en simulacros de respuesta ante emergencias.",Proteccion_civil,preparacion,Protección Civil,Ley de Protección Civil,TRUE
+"Los laboratorios nacionales deberán mantener niveles de bioseguridad adecuados.",Ciencia_Tecnologia_Laboratorios,deteccion,Instituto Nacional de Salud,Norma de Bioseguridad,TRUE
+"El Ministerio de Educación promoverá la formación en epidemiología de campo.",Educacion,recursos_humanos,Ministerio de Educación,Plan Nacional de Formación,TRUE
+"Los transportistas internacionales deben cumplir con las normas de control sanitario fronterizo.",Transporte,poe,Autoridad Aduanera,Ley de Comercio Exterior,TRUE
+"La autoridad sanitaria podrá imponer cuarentenas proporcionales y no discriminatorias.",Salud_humana,respuesta,Secretaría de Salud,Ley General de Salud,TRUE
+"Los ministerios coordinarán acciones de respuesta a través del Comité Nacional de Seguridad en Salud.",Proteccion_civil,coordinacion,Comité Nacional de Seguridad en Salud,Acuerdo Interministerial,TRUE
+"Los servicios de salud deberán informar de inmediato cualquier brote a las autoridades competentes.",Salud_humana,notificacion,Instituciones de Salud,Ley General de Salud,TRUE
+"El Instituto Nacional de Investigaciones Nucleares supervisará la radioprotección.",Medio_ambiente,amenazas_especificas,Instituto Nacional de Investigaciones Nucleares,Ley de Energía Nuclear,TRUE
+"Se deberán realizar ejercicios anuales de simulación de brotes epidémicos.",Salud_humana,preparacion,Secretaría de Salud,Plan Nacional de Contingencias,TRUE
+"El Ministerio de Agricultura implementará medidas contra plagas que afecten la salud pública.",Agricultura,amenazas_especificas,Ministerio de Agricultura,Ley de Sanidad Vegetal,TRUE
