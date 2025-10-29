@@ -1,0 +1,142 @@
+{
+  "@type": "Ontology",
+  "name": "RSI (2005) Legal Preparedness Ontology - v1.1",
+  "description": "Ontología de gobernanza sanitaria global para detección de funciones RSI en textos legales.",
+  "version": "1.1",
+  "enumerations": {
+    "FunctionsRSI": [
+      "vigilancia",
+      "deteccion",
+      "notificacion",
+      "respuesta",
+      "coordinacion",
+      "poe",
+      "comunicacion_riesgo",
+      "recursos_humanos",
+      "legislacion_financiamiento",
+      "preparacion",
+      "amenazas_especificas"
+    ],
+    "Sectors": [
+      "Salud_humana",
+      "Salud_animal",
+      "Agricultura",
+      "Inocuidad_alimentaria",
+      "Transporte",
+      "Aduanas_Comercio",
+      "Puntos_de_entrada",
+      "Medio_ambiente",
+      "Proteccion_civil",
+      "Relaciones_exteriores",
+      "Defensa_seguridad",
+      "Educacion",
+      "Trabajo_occupacional",
+      "Finanzas_publicas",
+      "Ciencia_Tecnologia_Laboratorios"
+    ],
+    "Hazards": [
+      "biologico",
+      "zoonotico",
+      "inocuidad_alimentos",
+      "quimico",
+      "radiologico_nuclear"
+    ]
+  },
+  "relations": [
+    {"id": "supportsFunction", "domain": "LegalInstrument|Actor|Sector", "range": "FunctionRSI"},
+    {"id": "hasAuthority", "domain": "Actor|Sector", "range": "FunctionRSI"},
+    {"id": "belongsToSector", "domain": "Actor|Instrument|Medida", "range": "Sector"},
+    {"id": "coordinatesWith", "domain": "Actor", "range": "Actor"},
+    {"id": "mandatesMeasure", "domain": "LegalInstrument", "range": "FunctionRSI"}
+  ],
+  "actors_generic": [
+    "Ministerio de Salud",
+    "Secretaría de Salud",
+    "COFEPRIS",
+    "SENASA",
+    "DIGESA",
+    "INS",
+    "ANVISA",
+    "Protección Civil",
+    "Aduanas",
+    "Autoridad Sanitaria Portuaria",
+    "Ministerio de Agricultura",
+    "Relaciones Exteriores",
+    "Hacienda",
+    "Ejército / Defensa"
+  ],
+  "keywords": {
+    "vigilancia": [
+      "vigilancia epidemiol",
+      "sistema nacional de vigilancia",
+      "notificación obligatoria",
+      "evento de interés en salud pública"
+    ],
+    "deteccion": [
+      "diagnóstico de laboratorio",
+      "laboratorio de referencia",
+      "muestreo biológico",
+      "bioseguridad",
+      "cadena de custodia"
+    ],
+    "notificacion": [
+      "punto focal RSI",
+      "notificar a la OMS",
+      "comunicación internacional",
+      "reporte inmediato",
+      "alerta sanitaria internacional"
+    ],
+    "respuesta": [
+      "emergencia sanitaria",
+      "cuarentena",
+      "aislamiento",
+      "control sanitario",
+      "estado de emergencia"
+    ],
+    "coordinacion": [
+      "comité intersectorial",
+      "coordinación multisectorial",
+      "autoridad competente",
+      "comisión nacional"
+    ],
+    "poe": [
+      "puertos",
+      "aeropuertos",
+      "frontera terrestre",
+      "certificado de control sanitario",
+      "control sanitario internacional"
+    ],
+    "comunicacion_riesgo": [
+      "alerta a la población",
+      "información pública",
+      "transparencia en salud",
+      "campaña informativa"
+    ],
+    "recursos_humanos": [
+      "formación",
+      "capacitación",
+      "competencias epidemiológicas",
+      "profesionales de salud pública"
+    ],
+    "legislacion_financiamiento": [
+      "facultades legales",
+      "autoridad sanitaria nacional",
+      "presupuesto asignado",
+      "fondo de emergencia",
+      "asignación presupuestaria"
+    ],
+    "preparacion": [
+      "plan nacional de respuesta",
+      "simulacro",
+      "centro de operaciones de emergencia",
+      "evaluación de capacidades"
+    ],
+    "amenazas_especificas": [
+      "zoonosis",
+      "inocuidad alimentaria",
+      "sustancias químicas peligrosas",
+      "radiación ionizante",
+      "resistencia antimicrobiana"
+    ]
+  }
+}
