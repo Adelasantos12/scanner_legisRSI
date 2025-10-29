@@ -1,0 +1,6 @@
+Flask
+pandas
+PyYAML
+python-docx
+PyPDF2
+scikit-learn
