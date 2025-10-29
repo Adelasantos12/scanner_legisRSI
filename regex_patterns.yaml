@@ -1,0 +1,54 @@
+vigilancia:
+  - "(vigilancia|monitoreo|observación) (epidemiol|sanitaria)"
+  - "notificaci[oó]n obligatoria"
+  - "sistema nacional de vigilancia"
+
+deteccion:
+  - "(diagn[oó]stic|detecci[oó]n|muestreo) (de|en)"
+  - "(laboratorio|bioseguridad|an[aá]lisis) (de referencia|nacional)"
+  - "cadena de custodia"
+
+notificacion:
+  - "(notificar|informar|comunicar) (a la OMS|al Punto Focal)"
+  - "(alerta|reporte) (inmediato|internacional)"
+  - "(evento|emergencia) (de inter[eé]s internacional)"
+
+respuesta:
+  - "(cuarentena|aislamiento|confinamiento)"
+  - "(emergencia sanitaria|estado de emergencia)"
+  - "(control|medida) sanitaria"
+
+coordinacion:
+  - "(comit[eé]|comisi[oó]n) (intersectorial|nacional)"
+  - "(coordinaci[oó]n|concertaci[oó]n) (multisectorial)"
+  - "autoridad competente"
+
+poe:
+  - "(puerto|aeropuerto|frontera)"
+  - "(control sanitario|certificado sanitario)"
+  - "sanidad (internacional|portuaria)"
+
+comunicacion_riesgo:
+  - "(alerta|aviso|camp[aá]ña) (a la poblaci[oó]n|p[uú]blica)"
+  - "(comunicaci[oó]n|informaci[oó]n) (de riesgo|sanitaria)"
+  - "transparencia en salud"
+
+recursos_humanos:
+  - "(formaci[oó]n|capacitaci[oó]n|entrenamiento)"
+  - "(epidemiolog[ií]a de campo|competencias profesionales)"
+  - "(educaci[oó]n continua|programa de formaci[oó]n)"
+
+legislacion_financiamiento:
+  - "(facultad(es)?|autoridad) (sanitaria|legal)"
+  - "(presupuesto|financiamiento|fondo) (de emergencia|sanitario)"
+  - "(asignaci[oó]n|recurso) (presupuestario|financiero)"
+
+preparacion:
+  - "(plan nacional|programa) (de respuesta|de contingencia)"
+  - "(simulacro|ejercicio) (sanitario|epidemiol[oó]gico)"
+  - "(centro de operaciones|EOC|COE)"
+
+amenazas_especificas:
+  - "(zoonosis|inocuidad alimentaria|AMR|resistencia antimicrobiana)"
+  - "(sustancias qu[ií]micas|radiaci[oó]n|nuclear)"
+  - "(bioseguridad|biotecnolog[ií]a)"
