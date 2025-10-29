@@ -1,0 +1,21 @@
+texto,sector,funcion,actor,instrumento,has_authority
+"La Secretaría de Salud establecerá un sistema nacional de vigilancia epidemiológica.",Salud_humana,vigilancia,Secretaría de Salud,Ley General de Salud,TRUE
+"El SENASICA coordinará la vigilancia de enfermedades zoonóticas en coordinación con la Secretaría de Salud.",Salud_animal,vigilancia,SENASICA,Ley Federal de Sanidad Animal,TRUE
+"El Punto Focal Nacional notificará a la OMS cualquier evento de interés en salud pública.",Relaciones_exteriores,notificacion,Punto Focal RSI,Reglamento Sanitario Internacional,TRUE
+"Los puertos marítimos deberán contar con servicios de sanidad internacional.",Puntos_de_entrada,poe,Autoridad Sanitaria Portuaria,Ley de Puertos,TRUE
+"Los aeropuertos deberán aplicar las medidas de control sanitario que determine la autoridad competente.",Transporte,poe,Secretaría de Infraestructura, Comunicaciones y Transportes,Ley de Aeropuertos,TRUE
+"El Ministerio de Hacienda creará un fondo permanente para emergencias sanitarias.",Finanzas_publicas,legislacion_financiamiento,SHCP,Ley Federal de Presupuesto y Responsabilidad Hacendaria,TRUE
+"Los gobiernos locales deberán realizar simulacros anuales de respuesta a emergencias sanitarias.",Proteccion_civil,preparacion,Protección Civil,Ley General de Protección Civil,TRUE
+"El Instituto de Diagnóstico y Referencia Epidemiológicos (InDRE) actuará como laboratorio de referencia nacional.",Ciencia_Tecnologia_Laboratorios,deteccion,InDRE,Reglamento Interior de la Secretaría de Salud,TRUE
+"La Secretaría de Agricultura y Desarrollo Rural coordinará el control de plagas que afecten la salud pública.",Agricultura,amenazas_especificas,SADER,Ley Federal de Sanidad Vegetal,TRUE
+"El Presidente podrá declarar emergencia sanitaria a propuesta de la Secretaría de Salud.",Salud_humana,respuesta,Presidencia,Ley General de Salud,TRUE
+"El Comité Nacional para la Seguridad en Salud coordinará las acciones multisectoriales de respuesta.",Proteccion_civil,coordinacion,Comité Nacional de Seguridad en Salud,Acuerdo Interinstitucional,TRUE
+"Las instituciones públicas deberán informar de inmediato cualquier brote epidémico a las autoridades competentes.",Salud_humana,notificacion,Instituciones de Salud,Ley General de Salud,TRUE
+"Los laboratorios nacionales deberán cumplir con los estándares de bioseguridad nivel 3.",Ciencia_Tecnologia_Laboratorios,deteccion,InDRE,NOM-087-SSA1-2002,TRUE
+"Las autoridades sanitarias deberán comunicar al público las medidas preventivas durante emergencias.",Salud_humana,comunicacion_riesgo,Secretaría de Salud,Ley General de Salud,TRUE
+"La Secretaría de Medio Ambiente coordinará la disposición de residuos biológicos peligrosos durante emergencias.",Medio_ambiente,respuesta,SEMARNAT,Ley General del Equilibrio Ecológico y la Protección al Ambiente,TRUE
+"Los servicios de salud deberán mantener la formación continua de su personal en vigilancia epidemiológica.",Salud_humana,recursos_humanos,Secretaría de Salud,Ley General de Salud,TRUE
+"El Instituto Mexicano del Seguro Social garantizará la atención médica en situaciones de emergencia.",Salud_humana,respuesta,IMSS,Ley del Seguro Social,TRUE
+"Las autoridades sanitarias en aeropuertos deberán emitir certificados sanitarios internacionales.",Transporte,poe,COFEPRIS,Ley de Aeropuertos,TRUE
+"El Servicio Nacional de Sanidad, Inocuidad y Calidad Agroalimentaria realizará controles de inocuidad alimentaria.",Inocuidad_alimentaria,vigilancia,SENASICA,Ley Federal de Sanidad Animal,TRUE
+"Las instituciones de educación superior deberán incluir temas de salud pública en sus programas académicos.",Educacion,recursos_humanos,SEP,Ley General de Educación,TRUE
