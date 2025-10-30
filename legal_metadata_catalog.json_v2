@@ -1,0 +1,58 @@
+import json
+
+catalog = {
+    "ley_general_de_salud": {
+        "nombre": "Ley General de Salud",
+        "sigla_local": "LGS",
+        "pais": "México",
+        "autoridad_responsable_principal": {
+            "tipo_generico": "Ministerio/Secretaría de Salud",
+            "nombre_local": "Secretaría de Salud",
+            "sigla_local": "SSA"
+        },
+        "otras_autoridades_relacionadas": [
+            {"tipo_generico": "Consejo de Salubridad General"},
+            {"tipo_generico": "Servicios Estatales de Salud"}
+        ],
+        "dof_publicacion": "07/02/1984",
+        "ultima_reforma_reportada": "07/06/2024",
+        "sector_base": "salud_humana",
+        "eje_RSI": ["vigilancia", "deteccion", "notificacion", "respuesta", "poe"],
+        "palabras_clave_RSI": [
+            "vigilancia epidemiológica",
+            "autoridad sanitaria",
+            "aislamiento",
+            "cuarentena",
+            "control sanitario"
+        ]
+    },
+    "ley_general_de_proteccion_civil": {
+        "nombre": "Ley General de Protección Civil",
+        "sigla_local": "LGPC",
+        "pais": "México",
+        "autoridad_responsable_principal": {
+            "tipo_generico": "Ministerio/Secretaría de Seguridad y Protección Ciudadana",
+            "nombre_local": "Secretaría de Seguridad y Protección Ciudadana",
+            "sigla_local": "SSPC"
+        },
+        "otras_autoridades_relacionadas": [
+            {"tipo_generico": "Ministerio/Secretaría de Salud"},
+            {"tipo_generico": "Gobiernos subnacionales"}
+        ],
+        "dof_publicacion": "06/06/2012",
+        "ultima_reforma_reportada": "21/12/2023",
+        "sector_base": "proteccion_civil",
+        "eje_RSI": ["coordinacion", "respuesta", "preparacion"],
+        "palabras_clave_RSI": [
+            "sistema nacional de protección civil",
+            "plan de emergencia",
+            "alerta temprana"
+        ]
+    }
+}
+
+output_path = "../ontology/legal_metadata_catalog.json"
+with open(output_path, "w", encoding="utf-8") as f:
+    json.dump(catalog, f, indent=2, ensure_ascii=False)
+
+print(f"✅ Catálogo legal guardado en: {output_path}")
