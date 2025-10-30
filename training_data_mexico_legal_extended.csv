@@ -1,0 +1,41 @@
+import pandas as pd
+
+# === Configuración base ===
+records = [
+    {
+        "id": "MX001",
+        "ley_origen": "Ley General de Salud",
+        "articulo": "Sistema Nacional de Vigilancia Epidemiológica",
+        "texto_original": "Corresponderá a la Secretaría de Salud establecer y operar el Sistema Nacional de Vigilancia Epidemiológica.",
+        "texto_normalizado": "ministerio de salud establece y opera el sistema nacional de vigilancia epidemiológica.",
+        "funcion_RSI": "vigilancia",
+        "sector": "salud_humana",
+        "actor_principal": "Ministerio/Secretaría de Salud [SSA, México]",
+        "actor_coordinador": "Servicios Estatales de Salud [México]",
+        "instrumento": "vigilancia epidemiológica",
+        "has_authority": True,
+        "dof_ref": "DOF 07/02/1984 · Última reforma 07/06/2024"
+    },
+    {
+        "id": "MX002",
+        "ley_origen": "Ley General de Protección Civil",
+        "articulo": "Sistema Nacional de Protección Civil",
+        "texto_original": "El Sistema Nacional de Protección Civil coordinará las acciones de preparación y auxilio ante emergencias que afecten a la población.",
+        "texto_normalizado": "sistema nacional de protección civil coordina preparación y respuesta ante emergencias.",
+        "funcion_RSI": "coordinacion",
+        "sector": "proteccion_civil",
+        "actor_principal": "Ministerio/Secretaría de Seguridad y Protección Ciudadana [SSPC, México]",
+        "actor_coordinador": "Ministerio/Secretaría de Salud [SSA, México]",
+        "instrumento": "coordinación interinstitucional",
+        "has_authority": True,
+        "dof_ref": "DOF 06/06/2012 · Última reforma 21/12/2023"
+    },
+]
+
+# === Crear DataFrame ===
+df = pd.DataFrame(records)
+
+# === Guardar CSV ===
+output_path = "../data/training_data_mexico_legal_extended.csv"
+df.to_csv(output_path, index=False, encoding="utf-8")
+print(f"✅ Archivo guardado en: {output_path}")
