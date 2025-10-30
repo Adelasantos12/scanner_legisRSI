@@ -8,3 +8,4 @@ torch
 transformers
 tqdm
 gunicorn
+protobuf
