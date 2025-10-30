@@ -51,7 +51,7 @@ catalog = {
     }
 }
 
-output_path = "../ontology/legal_metadata_catalog.json"
+output_path = "data/legal_metadata_catalog.json"
 with open(output_path, "w", encoding="utf-8") as f:
     json.dump(catalog, f, indent=2, ensure_ascii=False)
 

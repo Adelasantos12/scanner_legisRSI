@@ -27,21 +27,24 @@
         <div id="results-section" class="results-section" style="display:none;">
             <h2>Resultados del Análisis</h2>
             <div class="summary">
-                <p><strong>Función RSI Principal:</strong> <span id="rsi-function"></span></p>
-                <p><strong>Sector Probable:</strong> <span id="sector"></span></p>
-                <p><strong>Confianza del Modelo:</strong> <span id="confidence"></span>%</p>
-                <p><strong>Autoridad Legal:</strong> <span id="legal-authority"></span></p>
-                <p><strong>Ley Probable:</strong> <span id="probable-law"></span></p>
+                <p><strong>Ley Analizada:</strong> <span id="ley-analizada"></span></p>
+                <p><strong>Autoridad Legal:</strong> <span id="autoridad-legal"></span></p>
+                <p><strong>Publicación (DOF):</strong> <span id="dof"></span></p>
+                <p><strong>Insight sectorial dominante:</strong> <span id="insight-sectorial"></span></p>
+                <p><strong>Confianza del Modelo:</strong> <span id="confianza"></span>%</p>
             </div>
-            <div class="chart-container">
-                <canvas id="rsi-chart"></canvas>
+
+            <div class="semantic-analysis">
+                <h3>Análisis Semántico</h3>
+                <div class="chart-container">
+                    <canvas id="rsi-chart"></canvas>
+                </div>
+                <div class="details">
+                    <h4>Coincidencias Regex</h4>
+                    <div id="keywords"></div>
+                </div>
             </div>
-            <div class="details">
-                <h3>Palabras Clave Detectadas</h3>
-                <div id="keywords"></div>
-                <h3>Explicación</h3>
-                <div id="explanation"></div>
-            </div>
+
             <button id="download-csv-btn">Descargar CSV</button>
         </div>
     </div>

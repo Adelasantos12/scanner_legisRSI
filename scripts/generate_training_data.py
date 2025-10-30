@@ -33,9 +33,9 @@ records = [
 ]
 
 # === Crear DataFrame ===
-df = pd.DataFrame(records)
+df = pd.DataFrame(records * 5)  # Multiplicar los datos para el entrenamiento
 
 # === Guardar CSV ===
-output_path = "../data/training_data_mexico_legal_extended.csv"
+output_path = "data/training_data_mexico_legal_extended.csv"
 df.to_csv(output_path, index=False, encoding="utf-8")
 print(f"✅ Archivo guardado en: {output_path}")

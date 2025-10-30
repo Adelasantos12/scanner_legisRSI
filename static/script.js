@@ -28,29 +28,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function displayResults(data) {
-        document.getElementById('rsi-function').textContent = data.funcion_rsi;
-        document.getElementById('sector').textContent = data.sector;
-        document.getElementById('confidence').textContent = data.confianza.toFixed(2);
-        document.getElementById('legal-authority').textContent = data.autoridad_legal;
-        document.getElementById('probable-law').textContent = data.ley_probable;
+        // Mapear nuevos campos de metadatos
+        document.getElementById('ley-analizada').textContent = data.ley_analizada;
+        document.getElementById('autoridad-legal').textContent = data.autoridad_legal;
+        document.getElementById('dof').textContent = data.dof;
 
+        // Mapear resultados del análisis semántico
+        document.getElementById('insight-sectorial').textContent = data.insight_sectorial;
+        document.getElementById('confianza').textContent = data.confianza.toFixed(2);
+
+        // Mapear resultados de regex
         const keywordsContainer = document.getElementById('keywords');
         keywordsContainer.innerHTML = data.palabras_clave.map(kw => `<span>${kw}</span>`).join(', ');
-
-        const explanationContainer = document.getElementById('explanation');
-        explanationContainer.innerHTML = '';
-        for(const func in data.explicacion){
-            if (data.explicacion[func].length > 0){
-                const funcTitle = document.createElement('h4');
-                funcTitle.textContent = func;
-                explanationContainer.appendChild(funcTitle);
-                data.explicacion[func].forEach(exp => {
-                    const p = document.createElement('p');
-                    p.textContent = exp;
-                    explanationContainer.appendChild(p);
-                });
-            }
-        }
 
         renderChart(data.distribucion_funciones);
         resultsSection.style.display = 'block';
@@ -66,7 +55,7 @@ document.addEventListener('DOMContentLoaded', () => {
             data: {
                 labels: Object.keys(distribution),
                 datasets: [{
-                    label: 'Distribución de Funciones RSI',
+                    label: 'Distribución de Funciones RSI por Regex',
                     data: Object.values(distribution),
                     backgroundColor: 'rgba(0, 123, 255, 0.2)',
                     borderColor: 'rgba(0, 123, 255, 1)',
@@ -84,6 +73,11 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     document.getElementById('download-csv-btn').addEventListener('click', async () => {
+        if (!analysisData) {
+            alert("Primero debe realizar un análisis.");
+            return;
+        }
+
         const response = await fetch('/download_csv', {
             method: 'POST',
             headers: {

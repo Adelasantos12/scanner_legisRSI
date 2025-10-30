@@ -1,0 +1,17 @@
+# Ignorar artefactos de modelos de Machine Learning
+models/
+
+# Ignorar logs
+logs/
+
+# Ignorar archivos de caché de Python
+__pycache__/
+*.pyc
+
+# Ignorar archivos de subida
+uploads/
+
+# Archivos específicos del entorno
+.venv/
+venv/
+env/

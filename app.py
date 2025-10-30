@@ -9,68 +9,67 @@ import docx
 from PyPDF2 import PdfReader
 import io
 import csv
+import torch
+from transformers import BertTokenizerFast, BertForSequenceClassification
+import torch.nn.functional as F
 
 app = Flask(__name__, template_folder='templates', static_folder='static')
 app.config['UPLOAD_FOLDER'] = 'uploads'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
-# Cargar ontología, patrones de regex y datos de entrenamiento
+# --- Carga de Recursos ---
 with open('data/ontology_rsi_mexico.json', 'r', encoding='utf-8') as f:
     ontology = json.load(f)
 with open('data/regex_patterns_mexico.yaml', 'r', encoding='utf-8') as f:
     regex_patterns = yaml.safe_load(f)
-training_data = pd.read_csv('data/training_data_mexico_extended.csv')
+with open('data/legal_metadata_catalog.json', 'r', encoding='utf-8') as f:
+    legal_catalog = json.load(f)
 
+MODEL_DIR = "models/bert_rsi_latam"
+tokenizer = BertTokenizerFast.from_pretrained(MODEL_DIR)
+model = BertForSequenceClassification.from_pretrained(MODEL_DIR)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+model.to(device)
+model.eval()
+
+# --- Lógica de Análisis ---
 def clean_text(text):
     text = text.lower()
-    text = re.sub(r'\s+', ' ', text)
-    return text
+    return re.sub(r'\s+', ' ', text)
 
-def analyze_text(text):
+def legal_metadata_resolver(text):
     cleaned_text = clean_text(text)
-    results = {
-        'funcion_rsi': 'No identificada',
-        'sector': 'No identificado',
-        'confianza': 0,
-        'palabras_clave': [],
-        'autoridad_legal': 'No identificada',
-        'ley_probable': 'No identificada',
-        'distribucion_funciones': {func: 0 for func in ontology['enumerations']['FunctionsRSI']},
-        'explicacion': {}
-    }
+    for key, metadata in legal_catalog.items():
+        if re.search(r'\b' + re.escape(metadata['nombre'].lower()) + r'\b', cleaned_text) or \
+           re.search(r'\b' + re.escape(metadata['sigla_local'].lower()) + r'\b', cleaned_text):
+            return {"ley_analizada": f"{metadata['nombre']} ({metadata['autoridad_responsable_principal']['sigla_local']})", "autoridad_legal": metadata['autoridad_responsable_principal']['nombre_local'], "dof": metadata.get('dof_publicacion', 'No disponible')}
+    return {"ley_analizada": "No identificada", "autoridad_legal": "No identificada", "dof": "No disponible"}
 
-    # Lógica de clasificación basada en regex
+def semantic_analyzer(text):
+    inputs = tokenizer(text, return_tensors="pt", truncation=True, padding=True, max_length=512).to(device)
+    with torch.no_grad():
+        logits = model(**inputs).logits
+    probs = F.softmax(logits, dim=-1)
+    top_prob, top_class_idx = torch.max(probs, dim=-1)
+    confidence = top_prob.item()
+    predicted_class_id = top_class_idx.item()
+    predicted_class_label = model.config.id2label[predicted_class_id]
+    return {"insight_sectorial": predicted_class_label.replace("_", " ").title(), "confianza": confidence * 100}
+
+def regex_keyword_extractor(text):
+    cleaned_text = clean_text(text)
+    keywords, distribution = [], {func: 0 for func in ontology['enumerations']['FunctionsRSI']}
     for func, patterns in regex_patterns.items():
-        results['explicacion'][func] = []
         for pattern in patterns:
-            for match in re.finditer(pattern, cleaned_text):
-                results['distribucion_funciones'][func] += 1
-                results['palabras_clave'].append(match.group(0))
+            matches = re.findall(pattern, cleaned_text)
+            if matches:
+                keywords.extend(matches)
+                distribution[func] += len(matches)
+    return {"palabras_clave": list(set(keywords)), "distribucion_funciones": distribution}
 
-                # Guardar el fragmento de texto para la explicación
-                context_window = cleaned_text[max(0, match.start() - 50):min(len(cleaned_text), match.end() + 50)]
-                results['explicacion'][func].append(f"...{context_window}...")
-
-
-    # Simular la función y confianza principal
-    total_matches = sum(results['distribucion_funciones'].values())
-    if total_matches > 0:
-        main_func = max(results['distribucion_funciones'], key=results['distribucion_funciones'].get)
-        results['funcion_rsi'] = main_func
-        results['confianza'] = (results['distribucion_funciones'][main_func] / total_matches) * 100
-
-        # Inferir sector, autoridad y ley a partir de los datos de entrenamiento
-        relevant_data = training_data[training_data['funcion'] == main_func]
-        if not relevant_data.empty:
-            results['sector'] = relevant_data['sector'].iloc[0]
-            results['autoridad_legal'] = relevant_data['actor'].iloc[0]
-            results['ley_probable'] = relevant_data['instrumento'].iloc[0]
-
-    return results
-
+# --- Lectura de Archivos ---
 def read_file(file):
-    if file.filename.endswith('.txt'):
-        return file.read().decode('utf-8')
+    if file.filename.endswith('.txt'): return file.read().decode('utf-8')
     elif file.filename.endswith('.docx'):
         doc = docx.Document(io.BytesIO(file.read()))
         return ' '.join([para.text for para in doc.paragraphs])
@@ -79,49 +78,34 @@ def read_file(file):
         return ' '.join([page.extract_text() for page in pdf.pages])
     return ''
 
+# --- Endpoints de la API ---
 @app.route('/')
-def index():
-    return render_template('index.html')
+def index(): return render_template('index.html')
 
 @app.route('/analyze', methods=['POST'])
 def analyze_endpoint():
     text = ''
-    if 'text' in request.form and request.form['text']:
-        text = request.form['text']
-    elif 'file' in request.files and request.files['file'].filename:
-        file = request.files['file']
-        text = read_file(file)
+    if 'text' in request.form and request.form['text']: text = request.form['text']
+    elif 'file' in request.files and request.files['file'].filename: text = read_file(request.files['file'])
+    if not text: return jsonify({'error': 'No text or file provided'}), 400
 
-    if not text:
-        return jsonify({'error': 'No text or file provided'}), 400
-
-    analysis_results = analyze_text(text)
-
-    # Guardar resultados en log
-    with open('logs/results.log', 'a', encoding='utf-8') as f:
-        log_entry = {'input_text': text, 'results': analysis_results}
-        f.write(json.dumps(log_entry) + '\n')
-
-    return jsonify(analysis_results)
+    final_results = {**legal_metadata_resolver(text), **semantic_analyzer(text), **regex_keyword_extractor(text)}
+    return jsonify(final_results)
 
 @app.route('/download_csv', methods=['POST'])
 def download_csv():
     data = request.json
     output = io.StringIO()
     writer = csv.writer(output)
-
     writer.writerow(['Metrica', 'Valor'])
-    writer.writerow(['Función RSI', data.get('funcion_rsi')])
-    writer.writerow(['Sector', data.get('sector')])
-    writer.writerow(['Confianza (%)', data.get('confianza')])
+    writer.writerow(['Ley Analizada', data.get('ley_analizada')])
     writer.writerow(['Autoridad Legal', data.get('autoridad_legal')])
-    writer.writerow(['Ley Probable', data.get('ley_probable')])
-    writer.writerow(['Palabras Clave', ', '.join(data.get('palabras_clave', []))])
-
+    writer.writerow(['Publicación (DOF)', data.get('dof')])
+    writer.writerow(['Insight Sectorial Dominante', data.get('insight_sectorial')])
+    writer.writerow(['Confianza del Modelo (%)', f"{data.get('confianza', 0):.2f}"])
+    writer.writerow(['Palabras Clave (Regex)', ', '.join(data.get('palabras_clave', []))])
     output.seek(0)
     return Response(output, mimetype="text/csv", headers={"Content-Disposition":"attachment;filename=analisis_rsi.csv"})
 
-
 if __name__ == '__main__':
-    os.makedirs('logs', exist_ok=True)
     app.run(host='0.0.0.0', port=5000)

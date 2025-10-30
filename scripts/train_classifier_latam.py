@@ -5,7 +5,8 @@ from torch.utils.data import Dataset, DataLoader
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report, f1_score, accuracy_score
-from transformers import BertTokenizerFast, BertForSequenceClassification, AdamW, get_linear_schedule_with_warmup
+from torch.optim import AdamW
+from transformers import BertTokenizerFast, BertForSequenceClassification, get_linear_schedule_with_warmup
 from tqdm import tqdm
 import numpy as np
 

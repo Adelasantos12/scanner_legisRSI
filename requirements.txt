@@ -4,3 +4,6 @@ PyYAML
 python-docx
 PyPDF2
 scikit-learn
+torch
+transformers
+tqdm
