@@ -20,8 +20,6 @@ RUN python scripts/generate_centroids.py
 # 2. Entrena el modelo. Esto creará la carpeta `models/` que la app necesita.
 RUN python scripts/train_classifier_latam.py
 
-# Expone el puerto por defecto de Streamlit (8501)
-EXPOSE 8501
-
-# El comando que se ejecutará para iniciar la aplicación con Streamlit
-CMD ["streamlit", "run", "scanner_app.py", "--server.port=8501", "--server.address=0.0.0.0"]
+# El comando que se ejecutará para iniciar la aplicación con Streamlit.
+# Usará el puerto asignado por la variable de entorno $PORT, estándar en plataformas como Railway.
+CMD ["streamlit", "run", "scanner_app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
