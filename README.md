@@ -1,22 +1,25 @@
 # Clasificador de Leyes del Reglamento Sanitario Internacional (RSI)
 
-Este proyecto es una aplicación web que utiliza un modelo de Machine Learning (BERT) para clasificar fragmentos de leyes mexicanas según las funciones del Reglamento Sanitario Internacional (RSI 2005).
+Este proyecto es una aplicación web multi-página construida con Streamlit que proporciona herramientas para el análisis de marcos jurídicos en relación con el Reglamento Sanitario Internacional (RSI).
 
-La aplicación tiene "conciencia jurídica", lo que significa que distingue entre la identidad de la ley analizada y el contenido temático o "insight sectorial dominante".
+## Módulos
 
-## Características
+1.  **📋 Clasificador de Marco Jurídico Nacional:**
+    *   Permite subir una lista masiva de leyes de un país.
+    *   Utiliza un modelo de `sentence-transformers` para clasificar cada ley por su sector RSI más probable y asignar un score de relevancia.
+    *   Proporciona visualizaciones y un resumen estadístico del marco jurídico.
+    *   Permite seleccionar las leyes más relevantes para un análisis más profundo.
 
--   **Análisis de Texto**: Permite pegar texto o subir archivos (`.txt`, `.docx`, `.pdf`).
--   **Modelo BERT**: Utiliza un modelo BERT multilingüe para un análisis semántico preciso.
--   **Conciencia Jurídica**: Identifica la ley de origen, autoridad y fecha de publicación.
--   **Visualización Completa**: Muestra un resumen del análisis, palabras clave de regex y un gráfico de radar.
--   **Exportación**: Permite descargar los resultados en formato `.csv`.
+2.  **⚖️ Módulo de Escaneo Profundo de Leyes:**
+    *   Recibe las leyes seleccionadas o texto nuevo.
+    *   Utiliza un modelo BERT para un análisis semántico detallado, identificando la función RSI dominante.
+    *   Extrae palabras clave y metadatos de la ley.
 
 ---
 
 ## Configuración y Ejecución Local
 
-Siga estos pasos para configurar el entorno, generar los artefactos necesarios y ejecutar la aplicación en su máquina local.
+Siga estos pasos para configurar el entorno, generar los artefactos y ejecutar la aplicación.
 
 ### 1. Prerrequisitos
 
@@ -24,64 +27,48 @@ Siga estos pasos para configurar el entorno, generar los artefactos necesarios y
 -   `pip` (gestor de paquetes de Python)
 
 ### 2. Instalación de Dependencias
-
-Clone el repositorio, cree un entorno virtual (recomendado) y luego instale las dependencias.
 ```bash
-# (Opcional) Crear y activar un entorno virtual
-python -m venv venv
-source venv/bin/activate  # En Windows: venv\Scripts\activate
-
-# Instalar bibliotecas
 pip install -r requirements.txt
 ```
 
 ### 3. Build de Artefactos (¡Paso Crucial!)
 
-La aplicación necesita archivos de datos y un modelo entrenado para funcionar. Estos no se guardan en Git y deben generarse localmente.
-
-Ejecute los siguientes comandos en orden:
+La aplicación necesita archivos de datos, centroides y un modelo entrenado para funcionar. Ejecute los siguientes comandos en orden:
 ```bash
-# 1. Generar el catálogo de metadatos JSON
+# 1. Generar archivos de datos
 python scripts/generate_metadata_catalog.py
-
-# 2. Generar el archivo de datos de entrenamiento CSV
 python scripts/generate_training_data.py
 
-# 3. Entrenar el modelo (esto creará la carpeta `models/`)
+# 2. Generar centroides para el clasificador
+python scripts/generate_centroids.py
+
+# 3. Entrenar el modelo de análisis profundo (esto crea la carpeta `models/`)
 python scripts/train_classifier_latam.py
 ```
+**Nota:** El paso de entrenamiento puede consumir mucha memoria RAM (>4GB). Si falla en su entorno local, es una limitación de recursos. El deploy en la nube (ver abajo) solucionará esto.
 
-### 4. Ejecutar la Aplicación
+### 4. Ejecutar la Aplicación Streamlit
 
-Una vez que los artefactos estén construidos, inicie el servidor Flask.
+Una vez que los artefactos estén construidos, inicie la aplicación:
 ```bash
-python app.py
+streamlit run scanner_app.py
 ```
-
-Abra su navegador y vaya a [http://127.0.0.1:5000](http://127.0.0.1:5000).
+La aplicación se abrirá automáticamente en su navegador.
 
 ---
 
-## Deploy en Render (Recomendado)
+## Deploy en Render o Railway (Recomendado)
 
-Este proyecto incluye un `Dockerfile` para un despliegue sencillo y robusto en plataformas PaaS como Render.
+Este proyecto incluye un `Dockerfile` para un despliegue sencillo en plataformas PaaS.
 
-### 1. Crear una cuenta en Render
+### 1. Configuración del Servicio
 
--   Vaya a [render.com](https://render.com/), cree una cuenta y conéctela a su repositorio de GitHub.
+-   Cree un nuevo "Web Service" en su plataforma (Render, Railway, etc.).
+-   Conéctelo a su repositorio de GitHub.
+-   **Runtime**: Elija `Docker`. La plataforma detectará el `Dockerfile`.
+-   **Plan de Instancia**: **Importante:** Debido a los modelos de ML, el plan gratuito no será suficiente. Seleccione un plan con **al menos 4GB de RAM** para asegurar que el build (que incluye el entrenamiento del modelo) y la ejecución de la aplicación no fallen.
 
-### 2. Crear un Nuevo "Web Service"
+### 2. Desplegar
 
--   En el dashboard de Render, haga clic en "New" -> "Web Service".
--   Seleccione su repositorio.
-
-### 3. Configuración del Servicio
-
--   **Runtime**: Elija `Docker`. Render detectará automáticamente el `Dockerfile`.
--   **Plan de Instancia**: **Importante:** El modelo BERT consume una cantidad significativa de RAM. El plan gratuito no será suficiente. Seleccione un plan de pago con al menos 2GB de RAM (por ejemplo, "Starter" o superior) para asegurar que la aplicación pueda iniciarse.
--   **Health Check Path**: Puede usar la ruta por defecto `/`.
-
-### 4. Desplegar
-
--   Haga clic en "Create Web Service". Render comenzará el proceso de build, que puede tardar varios minutos ya que incluye la instalación de dependencias y el entrenamiento del modelo.
--   Una vez finalizado, su aplicación estará disponible en una URL pública.
+-   Inicie el deploy. La plataforma construirá la imagen de Docker, ejecutando todos los scripts de build. Este primer build puede tardar varios minutos.
+-   Una vez finalizado, su aplicación estará en vivo en una URL pública.

@@ -9,3 +9,5 @@ transformers
 tqdm
 gunicorn
 protobuf
+streamlit
+sentence-transformers
