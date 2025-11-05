@@ -21,5 +21,5 @@ RUN python scripts/generate_centroids.py
 RUN python scripts/train_classifier_latam.py
 
 # El comando que se ejecutará para iniciar la aplicación con Streamlit.
-# Usará el puerto asignado por la variable de entorno $PORT, estándar en plataformas como Railway.
-CMD ["streamlit", "run", "scanner_app.py", "--server.port=$PORT", "--server.address=0.0.0.0"]
+# Usamos la "shell form" para que la variable de entorno $PORT sea interpretada.
+CMD streamlit run scanner_app.py --server.port=$PORT --server.address=0.0.0.0
